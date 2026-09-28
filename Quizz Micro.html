@@ -1,0 +1,1105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Quizz Microéco Ultimate - 100 Questions</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<!-- KaTeX for Math Rendering -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+<style>
+:root{
+  color-scheme: light;
+  --bg:#f0eef8; --surface:#ffffff; --surface-2:#f6f5fb;
+  --ink:#1c1b29; --ink-2:#544f68; --ink-3:#847e97;
+  --line:#ddd9ea; --line-strong:#c1baD8;
+  --accent:#5b3ee0; --accent-soft:#ece6fb;
+  --good:#1f6b45; --good-soft:#e2f1e8;
+  --bad:#a4302c; --bad-soft:#f8e6e4;
+  --warn:#b4590c; --warn-soft:#faece0;
+  --gold:#b8860b; --gold-soft:#fbf1da;
+  --boss:#c026d3; --boss-soft:#f7e3fa;
+  --shadow:0 1px 2px rgba(28,27,41,.06), 0 8px 24px -12px rgba(28,27,41,.2);
+  --radius:12px;
+  --display:"Newsreader", Georgia, serif;
+  --body:"Public Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#100e1c; --surface:#191726; --surface-2:#211e33;
+    --ink:#ece9f7; --ink-2:#b1a9cc; --ink-3:#8378a0;
+    --line:#312c48; --line-strong:#453e63;
+    --accent:#9f85ff; --accent-soft:#241f42;
+    --good:#7bc99b; --good-soft:#132b20;
+    --bad:#e8918c; --bad-soft:#331b1a;
+    --warn:#e5a95f; --warn-soft:#332615;
+    --gold:#e6c455; --gold-soft:#332c10;
+    --boss:#e879f9; --boss-soft:#31183a;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.8);
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:0 48px}
+
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:720px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.01em;margin:0;flex:1 1 auto;min-width:0}
+.brand span{background:linear-gradient(90deg,var(--accent),var(--boss));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lvlchip{font-family:var(--mono);font-size:12.5px;background:var(--gold-soft);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 40%,var(--line));border-radius:999px;padding:4px 10px;white-space:nowrap;font-weight:600}
+.scorechip{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 11px;white-space:nowrap}
+.scorechip b{color:var(--accent);font-weight:600}
+.streakchip{font-family:var(--mono);font-size:13px;background:var(--warn-soft);color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 40%,var(--line));border-radius:999px;padding:4px 10px;white-space:nowrap;font-weight:700;transition:transform .15s}
+.streakchip.pop{animation:pop .35s ease}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.3)}100%{transform:scale(1)}}
+.soundbtn{font-size:16px;background:var(--surface);border:1px solid var(--line);border-radius:999px;width:30px;height:30px;display:grid;place-items:center;cursor:pointer;color:var(--ink-2)}
+.bar{height:3px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--boss));transition:width .3s ease}
+
+.hero{padding-block:28px 8px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 10px}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,7vw,40px);line-height:1.12;letter-spacing:-.02em;margin:0 0 12px;text-wrap:balance}
+.lede{color:var(--ink-2);margin:0 0 4px;max-width:65ch}
+.rules{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;font-family:var(--mono);font-size:12px}
+.rule{border:1px solid var(--line);border-radius:8px;padding:5px 9px;background:var(--surface);font-variant-numeric:tabular-nums}
+.rule.p{color:var(--good);border-color:color-mix(in srgb,var(--good) 35%,var(--line))}
+.rule.z{color:var(--ink-3)}
+.rule.m{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 35%,var(--line))}
+.rule.x{color:var(--boss);border-color:color-mix(in srgb,var(--boss) 40%,var(--line))}
+
+.profile{background:linear-gradient(135deg,var(--accent-soft),var(--boss-soft));border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-top:22px;display:flex;align-items:center;gap:14px}
+.profile .av{font-size:30px;flex:0 0 auto}
+.profile .pinfo{flex:1;min-width:0}
+.profile .ptitle{font-weight:700;font-size:15px}
+.profile .pxp{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);margin-top:2px}
+.xpbar{height:6px;border-radius:4px;background:var(--surface);overflow:hidden;margin-top:6px;box-shadow:inset 0 0 0 1px var(--line)}
+.xpbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--boss));transition:width .5s ease}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-top:16px;box-shadow:var(--shadow)}
+.lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);display:block;margin:0 0 9px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.mode{text-align:left;font:inherit;cursor:pointer;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:11px 12px;color:var(--ink);transition:border-color .15s,background .15s}
+.mode:hover{border-color:var(--line-strong)}
+.mode[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.mode b{display:block;font-weight:600;font-size:14.5px}
+.mode em{display:block;font-style:normal;font-size:12.5px;color:var(--ink-2);margin-top:2px}
+.mode span.n{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+
+select{font:inherit;font-size:15px;width:100%;padding:10px 12px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line);border-radius:10px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+@media (max-width:460px){.row2{grid-template-columns:1fr}}
+
+.btn{font:inherit;font-weight:600;font-size:16px;cursor:pointer;background:linear-gradient(90deg,var(--accent),var(--boss));color:#fff;border:1px solid transparent;border-radius:10px;padding:13px 18px;width:100%;margin-top:16px;transition:filter .15s,transform .1s}
+.btn:hover{filter:brightness(1.1)}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+.btn.ghost:hover{background:var(--surface-2);filter:none}
+
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:22px 0 12px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--ink-2);background:var(--surface)}
+.tag.theme{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 35%,var(--line));background:var(--accent-soft)}
+.tag.boss{color:var(--boss);border-color:color-mix(in srgb,var(--boss) 45%,var(--line));background:var(--boss-soft);font-weight:700}
+.counter{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:relative;transition:box-shadow .3s}
+.card.boss{box-shadow:0 0 0 2px var(--boss),0 0 26px -6px var(--boss)}
+.card.onfire{box-shadow:0 0 0 2px var(--warn),0 0 24px -6px var(--warn)}
+.card.shake{animation:shake .4s}
+@keyframes shake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)}}
+.qtext{font-family:var(--display);font-size:clamp(19px,4.4vw,23px);line-height:1.34;font-weight:500;margin:0;padding:20px 20px 4px;text-wrap:balance}
+.opts{list-style:none;margin:0;padding:14px;display:flex;flex-direction:column;gap:8px}
+.opt{position:relative;display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;font:inherit;font-size:15.5px;line-height:1.45;cursor:pointer;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px 13px;transition:border-color .12s,background .12s;overflow:visible}
+.opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.opt:disabled{cursor:default}
+.key{flex:0 0 auto;font-family:var(--mono);font-size:12.5px;font-weight:600;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line-strong);color:var(--ink-2);margin-top:1px}
+.opt.is-good{border-color:var(--good);background:var(--good-soft)}
+.opt.is-good .key{background:var(--good);border-color:var(--good);color:var(--surface)}
+.opt.is-bad{border-color:var(--bad);background:var(--bad-soft)}
+.opt.is-bad .key{background:var(--bad);border-color:var(--bad);color:var(--surface)}
+.opt.dim{opacity:.5}
+.particle{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--good);pointer-events:none;animation:pfly .6s ease-out forwards}
+@keyframes pfly{to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+
+.floatpts{position:absolute;right:18px;top:8px;font-family:var(--mono);font-weight:700;font-size:15px;pointer-events:none;opacity:0;color:var(--gold)}
+.floatpts.show{animation:floatUp 1s ease forwards}
+@keyframes floatUp{0%{opacity:0;transform:translateY(6px)}20%{opacity:1;transform:translateY(0)}80%{opacity:1}100%{opacity:0;transform:translateY(-18px)}}
+
+.feedback{border-top:1px solid var(--line);padding:16px 20px 20px;background:var(--surface-2)}
+.verdict{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;font-weight:700;font-size:15px;margin:0 0 9px}
+.verdict .pts{font-family:var(--mono);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.v-good{color:var(--good)} .v-bad{color:var(--bad)} .v-skip{color:var(--ink-3)}
+.streakline{font-family:var(--mono);font-size:12.5px;color:var(--warn);margin:0 0 8px;font-weight:600}
+.why{margin:0;color:var(--ink-2);font-size:15px;line-height:1.6}
+.why b{color:var(--ink)}
+.why code{font-family:var(--mono);font-size:13.5px;background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+.actions{display:flex;gap:10px;margin-top:14px}
+.actions .btn{margin-top:0}
+.pass{margin-top:12px;display:flex;justify-content:center}
+.passbtn{font:inherit;font-size:14px;color:var(--ink-3);background:none;border:none;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px}
+.passbtn:hover{color:var(--ink-2)}
+.hint{text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:14px}
+
+.result{text-align:center;padding-block:30px 8px}
+.bigscore{font-family:var(--mono);font-size:clamp(46px,14vw,70px);font-weight:600;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin:0;background:linear-gradient(90deg,var(--accent),var(--boss));-webkit-background-clip:text;background-clip:text;color:transparent}
+.bigscore small{font-size:.38em;color:var(--ink-3);font-weight:500;letter-spacing:0;-webkit-background-clip:initial;background-clip:initial;color:var(--ink-3)}
+.verdictline{font-family:var(--display);font-size:20px;margin:14px 0 0;text-wrap:balance}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:22px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 10px;text-align:center}
+.stat b{display:block;font-family:var(--mono);font-size:22px;font-variant-numeric:tabular-nums;line-height:1.2}
+.stat span{font-size:11.5px;color:var(--ink-3);font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.stat.g b{color:var(--good)} .stat.b b{color:var(--bad)} .stat.s b{color:var(--warn)}
+
+.badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+.badge{font-family:var(--mono);font-size:12.5px;background:var(--gold-soft);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 40%,var(--line));border-radius:999px;padding:6px 12px;font-weight:700;animation:badgein .4s ease}
+@keyframes badgein{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+
+.reviewlist{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.rev{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--bad);border-radius:10px;padding:13px 15px}
+.rev.skipped{border-left-color:var(--line-strong)}
+.rev p{margin:0}
+.rev .rq{font-family:var(--display);font-size:16.5px;line-height:1.35;margin-bottom:6px}
+.rev .ra{font-size:14.5px;color:var(--good);font-weight:600}
+.rev .rw{font-size:14px;color:var(--ink-2);margin-top:5px;line-height:1.55}
+h2.sec{font-family:var(--display);font-size:21px;font-weight:600;margin:30px 0 0}
+.foot{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3);line-height:1.6}
+
+.toast{position:fixed;left:50%;top:14px;transform:translate(-50%,-140%);z-index:50;background:linear-gradient(135deg,var(--accent),var(--boss));color:#fff;font-weight:700;font-family:var(--mono);font-size:13.5px;padding:10px 18px;border-radius:999px;box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.2,1.4,.4,1);text-align:center;max-width:88vw}
+.toast.show{transform:translate(-50%,0)}
+
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden}
+.confetti i{position:absolute;top:-12px;width:8px;height:14px;opacity:.9;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.2}}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<div id="toast" class="toast"></div>
+<div id="confettiLayer" class="confetti"></div>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <p class="brand">Quizz <span>Microéco</span> Ultimate</p>
+    <span class="lvlchip" id="lvlChip" hidden></span>
+    <span class="streakchip" id="streakChip" hidden>🔥 <span id="streakVal">0</span></span>
+    <span class="scorechip" id="chip" hidden>Score <b id="chipVal">0</b> pts</span>
+    <button class="soundbtn" id="soundBtn" title="Activer/couper le son">🔊</button>
+  </div>
+  <div class="bar"><i id="progbar"></i></div>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ START ============ -->
+  <section id="screenStart">
+    <div class="hero">
+      <p class="eyebrow">Finance · Info Cachée · Équilibre général · Jeux</p>
+      <h1>100 questions pour majorer la microéconomie</h1>
+      <p class="lede">Cette édition intégrale se concentre lourdement sur la seconde partie du cours : Finance intertemporelle, Probabilités risque-neutres, Akerlof, Spence (signaux), et Screening. Enchaîne les combos et affronte les questions bonus ⚡.</p>
+      <div class="rules">
+        <span class="rule p">Bonne réponse&nbsp;+0,5</span>
+        <span class="rule z">Sans réponse&nbsp;0</span>
+        <span class="rule m">Mauvaise réponse&nbsp;−0,25</span>
+        <span class="rule x">Bonus ⚡&nbsp;= XP x2</span>
+      </div>
+    </div>
+
+    <div class="profile">
+      <div class="av" id="avatarEmoji">🎓</div>
+      <div class="pinfo">
+        <div class="ptitle" id="titleText">Étudiant · Niveau 1</div>
+        <div class="pxp" id="xpText">0 / 100 XP</div>
+        <div class="xpbar"><i id="xpFill"></i></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <span class="lbl">Que veux-tu réviser&nbsp;?</span>
+      <div class="modes" id="modes"></div>
+
+      <div class="row2">
+        <div>
+          <span class="lbl">Thème</span>
+          <select id="themeSel"><option value="">Tous les thèmes</option></select>
+        </div>
+        <div>
+          <span class="lbl">Nombre de questions</span>
+          <select id="lenSel">
+            <option value="20" selected>20 — session courte</option>
+            <option value="50">50 — moitié du cours</option>
+            <option value="100">100 — la totale</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn" id="startBtn">Commencer</button>
+      <p class="hint" id="poolInfo"></p>
+    </div>
+
+    <p class="foot">Ton niveau, ton XP et tes questions ratées sont sauvegardés localement. Les questions ⚡ « boss » rapportent deux fois plus d'XP. Les formules mathématiques sont générées automatiquement via KaTeX.</p>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="screenQuiz" hidden>
+    <div class="qhead">
+      <span class="tag theme" id="qTheme"></span>
+      <span class="tag" id="qLvl"></span>
+      <span class="tag boss" id="qHot" hidden>⚡ Question bonus</span>
+      <span class="counter" id="qCount"></span>
+    </div>
+
+    <div class="card" id="qCard">
+      <span class="floatpts" id="floatPts"></span>
+      <p class="qtext" id="qText"></p>
+      <ul class="opts" id="qOpts"></ul>
+      <div class="pass" id="passWrap">
+        <button class="passbtn" id="passBtn">Je passe (0 point)</button>
+      </div>
+      <div class="feedback" id="fb" hidden>
+        <p class="verdict" id="verdict"></p>
+        <p class="streakline" id="streakline" hidden></p>
+        <p class="why" id="why"></p>
+        <div class="actions">
+          <button class="btn" id="nextBtn">Question suivante</button>
+        </div>
+      </div>
+    </div>
+    <p class="hint">Touches 1 à 5 pour répondre · P pour passer · Entrée pour continuer</p>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section id="screenEnd" hidden>
+    <div class="result">
+      <p class="eyebrow">Résultat</p>
+      <p class="bigscore" id="endScore"></p>
+      <p class="verdictline" id="endVerdict"></p>
+    </div>
+    <div class="stats">
+      <div class="stat g"><b id="stGood">0</b><span>justes</span></div>
+      <div class="stat b"><b id="stBad">0</b><span>fausses</span></div>
+      <div class="stat s"><b id="stSkip">0</b><span>blanches</span></div>
+    </div>
+    <div class="badges" id="badges"></div>
+
+    <div id="reviewWrap" hidden>
+      <h2 class="sec">À revoir</h2>
+      <ul class="reviewlist" id="reviewList"></ul>
+    </div>
+
+    <button class="btn" id="againMissed" hidden>Refaire seulement les ratées</button>
+    <button class="btn ghost" id="againBtn">Nouvelle série</button>
+
+    <p class="foot" id="memoNote"></p>
+  </section>
+
+</div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   BANQUE DE QUESTIONS INTÉGRALE - 100 QUESTIONS
+   ============================================================ */
+const Q = [
+/* ---------- PART 1: BASIQUES JEUX & DUOPOLES (12 Qs) ---------- */
+{t:"Jeux & Duopoles",lvl:1,top:1,
+ q:"Monopole avec $P = 8 - Q$ et coût marginal nul. Quelle est la quantité optimale ?",
+ o:["$Q = 8$","$Q = 2$","$Q = 4$","$Q = 6$"],
+ c:2, w:"La recette marginale est $Rm = 8 - 2Q$. On pose $Rm = Cm = 0 \\implies 8 - 2Q = 0 \\implies$ <b>$Q = 4$</b>."},
+{t:"Jeux & Duopoles",lvl:1,
+ q:"En Concurrence Pure et Parfaite (CPP), que vaut le prix à l'équilibre ?",
+ o:["$P = \\text{Recette Moyenne}$","$P = \\text{Coût Marginal (Cm)}$","$P = \\text{Coût Fixe}$","Il dépend de la réaction des autres"],
+ c:1, w:"En CPP, les firmes sont preneuses de prix et maximisent leur profit en égalisant <b>$P = Cm$</b>, menant à un profit nul."},
+{t:"Jeux & Duopoles",lvl:2,
+ q:"Cournot symétrique : $P = 12 - Q$, coûts nuls. Quelle est la quantité produite par *chaque* firme ?",
+ o:["$q^* = 3$","$q^* = 4$","$q^* = 6$","$q^* = 2$"],
+ c:1, w:"Meilleure réponse : $q_1 = \\frac{12 - q_2}{2}$. Par symétrie ($q_1 = q_2 = q^*$), on a $q^* = \\frac{12 - q^*}{2} \\implies 3q^* = 12 \\implies$ <b>$q^* = 4$</b>."},
+{t:"Jeux & Duopoles",lvl:2,top:1,
+ q:"Stackelberg : $P = 12 - Q$, coûts nuls. La firme 1 est leader. Que produit-elle ?",
+ o:["$q_1^* = 4$","$q_1^* = 6$","$q_1^* = 8$","$q_1^* = 3$"],
+ c:1, w:"Le leader anticipe $q_2 = \\frac{12-q_1}{2}$. Il maximise $P \\times q_1 = (6 - \\frac{q_1}{2})q_1$. La dérivée donne $6 - q_1 = 0 \\implies$ <b>$q_1^* = 6$</b>."},
+{t:"Jeux & Duopoles",lvl:1,
+ q:"Quel est le résultat principal du « Paradoxe de Bertrand » avec 2 firmes identiques ?",
+ o:["Le prix s'établit au niveau du monopole","Le prix chute au niveau du coût marginal ($P=Cm$)","Les firmes produisent des quantités asymétriques","Aucun équilibre n'existe"],
+ c:1, w:"Dès lors qu'il y a 2 firmes se concurrençant sur les prix (produit homogène), elles sous-cotent jusqu'à <b>$P = Cm$</b> (profit nul)."},
+{t:"Jeux & Duopoles",lvl:2,
+ q:"Dans un cartel, pourquoi l'entente est-elle structurellement instable ?",
+ o:["Parce que le profit total diminue","C'est un dilemme du prisonnier : chaque firme a individuellement intérêt à tricher pour produire plus","L'État rachète les firmes","Les barrières à l'entrée sont trop élevées"],
+ c:1, w:"Même si coopérer maximise le profit joint, la meilleure réponse unilatérale de chaque firme est de <b>dévier et produire plus</b>."},
+{t:"Jeux & Nash",lvl:1,
+ q:"Qu'est-ce qu'une stratégie strictement dominante ?",
+ o:["Une stratégie qui donne le gain maximum absolu du jeu","Une action qui donne toujours un gain supérieur, quel que soit le choix de l'autre joueur","Une stratégie uniquement jouée à l'équilibre mixte","Une stratégie qui rend l'adversaire indifférent"],
+ c:1, w:"Elle « domine » toutes les autres options car elle est <b>toujours la meilleure réponse</b>, indépendamment de l'action adverse."},
+{t:"Jeux & Nash",lvl:2,
+ q:"Dilemme du prisonnier : avec amende $c$ en cas de triche. À partir de quand la coopération devient-elle l'équilibre de Nash ?",
+ o:["Dès que $c > 0$","Jamais, on ne peut pas forcer la coopération","Quand $c$ est strictement supérieur au gain supplémentaire apporté par la triche ($c > 1$)","Si $c = 0.5$"],
+ c:2, w:"Pour que coopérer devienne dominant, l'amende <b>$c$ doit dépasser le bénéfice net de la triche</b> (ici $c>1$ selon l'exemple du cours)."},
+{t:"Jeux & Nash",lvl:2,top:1,
+ q:"En stratégies mixtes, comment un joueur choisit-il sa probabilité de jouer une action ?",
+ o:["Il maximise son propre gain pur","Il choisit la probabilité qui rend l'autre joueur *indifférent* entre ses actions pures","Il joue toujours $(1/2, 1/2)$","Il choisit la probabilité qui maximise le gain de l'autre"],
+ c:1, w:"C'est la méthode de l'indifférence : on choisit ses probabilités <b>en fonction des gains de l'adversaire</b> pour neutraliser sa capacité à exploiter une stratégie pure."},
+{t:"Jeux & Nash",lvl:3,
+ q:"Soit $U_1(x,y) = (5 - 6y)x + 2y$. Quelle est la meilleure réponse $x^*$ si $y = 5/6$ ?",
+ o:["$x=1$ avec certitude","$x=0$ avec certitude","Indifférent : n'importe quel $x \\in [0,1]$","$x=1/2$"],
+ c:2, w:"Si $y = 5/6$, le coefficient devant $x$ s'annule ($5 - 5 = 0$). J1 est donc <b>totalement indifférent</b> à $x$ : c'est la clé de l'équilibre mixte."},
+{t:"Jeux & Nash",lvl:2,
+ q:"Vrai ou faux : Dans un jeu à somme nulle, l'équilibre en stratégies mixtes est Pareto-Optimal.",
+ o:["Faux, l'équilibre mixte détruit de la valeur","Vrai, car améliorer le sort de l'un dégrade forcément l'autre","Faux, il y a toujours une meilleure issue","Vrai, mais seulement si $x = y = 0.5$"],
+ c:1, w:"<b>Vrai</b>. Dans un jeu à somme nulle, toute allocation est Pareto-optimale par définition (la somme est toujours zéro)."},
+{t:"Jeux & Nash",lvl:1,
+ q:"Le théorème de Nash garantit que tout jeu fini admet :",
+ o:["Au moins un équilibre en stratégies pures","Un équilibre unique","Au moins un équilibre (éventuellement en stratégies mixtes)","Un équilibre Pareto-optimal"],
+ c:2, w:"Le théorème prouve l'<b>existence</b> d'au moins un équilibre, mais il faut parfois utiliser des <b>stratégies mixtes</b> pour convexifier l'ensemble."},
+
+/* ---------- PART 2: EQUILIBRE GENERAL (8 Qs) ---------- */
+{t:"Équilibre Général",lvl:1,
+ q:"Que représente le Taux Marginal de Substitution (TMS) ?",
+ o:["Le prix de marché d'un bien","Combien de bien 1 l'agent est prêt à céder pour une unité de bien 2, à utilité constante","Le coût marginal de l'entreprise","Le ratio des dotations initiales"],
+ c:1, w:"Le $TMS$ est le <b>taux d'échange subjectif</b> de l'agent : $\\frac{\\partial U / \\partial x_2}{\\partial U / \\partial x_1}$."},
+{t:"Équilibre Général",lvl:2,top:1,
+ q:"Dans la Boîte d'Edgeworth, l'équilibre concurrentiel intérieur se trouve graphiquement :",
+ o:["Au centre exact de la boîte","Là où les courbes d'indifférence se coupent à angle droit","Au point de tangence entre les courbes d'indifférence des deux agents","Sur un des bords du rectangle"],
+ c:2, w:"À l'équilibre, les courbes d'indifférence sont <b>tangentes</b> : $TMS_1 = TMS_2 = \\frac{p_2}{p_1}$."},
+{t:"Équilibre Général",lvl:2,
+ q:"Agent 1 a $U_1 = x_1 + 1,2 x_2$. Quel est son $TMS_{2\\to1}$ ?",
+ o:["$1,2$ (constant)","$x_1 / x_2$ (variable)","$0,8$ (constant)","Il dépend du prix"],
+ c:0, w:"Pour une utilité linéaire, le rapport des utilités marginales est constant. Ici $\\frac{1,2}{1} =$ <b>$1,2$</b>."},
+{t:"Équilibre Général",lvl:2,
+ q:"Agent 1 a $U_1 = x_1 + 1,2x_2$ et Agent 2 a $U_2 = \\ln(x_1) + \\ln(x_2)$. À l'équilibre intérieur, quel est le prix relatif $p_{2/1}$ ?",
+ o:["$p_{2/1} = 1$","$p_{2/1} = 1,2$","$p_{2/1} = 2,4$","Indéterminé"],
+ c:1, w:"Puisque $TMS_1 = 1,2$ (constant), et que $TMS_1 = TMS_2 = p$ à l'équilibre, le prix relatif se fixe nécessairement à <b>$1,2$</b>."},
+{t:"Équilibre Général",lvl:3,top:1,
+ q:"Dans le modèle avec $U_1 = x_1 + ax_2$ et $U_2 = \\ln(x_1)+\\ln(x_2)$. Que se passe-t-il si le paramètre $a$ devient très grand ($a > 3$) ?",
+ o:["Le prix s'effondre","L'équilibre devient une « solution en coin » : l'agent 1 consomme tout le bien 2 et 0 unité du bien 1","Les agents arrêtent d'échanger","Le TMS devient négatif"],
+ c:1, w:"L'agent 1 aime tellement le bien 2 que le point de tangence théorique sort de la boîte. L'équilibre se réalise <b>sur le bord (en coin)</b>."},
+{t:"Équilibre Général",lvl:1,
+ q:"Que stipule le Premier Théorème de l'Économie du Bien-Être ?",
+ o:["Les monopoles sont optimaux","L'État doit toujours intervenir","Tout équilibre concurrentiel est un optimum de Pareto","L'équité est toujours respectée à l'équilibre"],
+ c:2, w:"Sous certaines hypothèses (absence d'externalités, etc.), le marché concurrentiel mène à une allocation <b>Pareto-optimale</b>."},
+{t:"Équilibre Général",lvl:2,
+ q:"La taille de la boîte d'Edgeworth est définie par :",
+ o:["La richesse de l'agent 1","Les prix de marché","La somme des dotations initiales totales des deux agents pour chaque bien","L'utilité maximale possible"],
+ c:2, w:"Les dimensions $(L, l)$ de la boîte sont exactement les <b>quantités totales disponibles</b> de bien 1 et de bien 2 dans l'économie."},
+{t:"Équilibre Général",lvl:2,
+ q:"Si l'utilité est une Cobb-Douglas ($U = \\ln x_1 + \\ln x_2$), comment se comporte le TMS ?",
+ o:["Il est constant et égal à 1","Il est variable et dépend du panier de consommation ($x_1 / x_2$)","Il est toujours nul","Il dépend des dotations de l'autre agent"],
+ c:1, w:"Le rapport des utilités marginales $(1/x_2) / (1/x_1) = x_1 / x_2$ <b>évolue</b> selon les quantités consommées."},
+
+/* ---------- PART 3: FINANCE INTERTEMPORELLE (15 Qs) ---------- */
+{t:"Finance : Intertemporel",lvl:1,
+ q:"Dans le modèle financier de base, on transpose le modèle d'équilibre général en remplaçant les 2 biens par :",
+ o:["Deux devises différentes","La consommation aujourd'hui ($t=0$) et la consommation demain ($t=1$)","Le capital et le travail","Des obligations et des actions"],
+ c:1, w:"On traite l'arbitrage <b>intertemporel</b> : le bien 1 est la consommation présente, le bien 2 est la consommation future."},
+{t:"Finance : Intertemporel",lvl:2,top:1,
+ q:"Quelle est la contrainte budgétaire intertemporelle consolidée d'un agent en $t=0$ (avec un taux $r$) ?",
+ o:["$x_0 + x_1 = d_0 + d_1$","$x_0 + \\frac{x_1}{1+r} = d_0 + \\frac{d_1}{1+r}$","$x_1 = (d_0 - x_0) \\times r$","$x_0 = \\frac{d_1 - x_1}{1+r}$"],
+ c:1, w:"On actualise les flux futurs : la valeur présente de la consommation doit égaler la valeur présente des dotations : <b>$x_0 + \\frac{x_1}{1+r} = d_0 + \\frac{d_1}{1+r}$</b>."},
+{t:"Finance : Intertemporel",lvl:1,
+ q:"Dans ce modèle, que représente $S = d_0 - x_0$ si $S > 0$ ?",
+ o:["Un emprunt de l'agent","Une épargne (prêt) de l'agent","Un défaut de paiement","Le taux d'escompte psychologique"],
+ c:1, w:"Si l'agent consomme moins que sa dotation en $t=0$ ($x_0 < d_0$), la différence $S$ est positive : c'est son <b>épargne</b> qu'il prête sur le marché."},
+{t:"Finance : Intertemporel",lvl:2,
+ q:"Si le taux d'intérêt d'équilibre est $r$, que vaut le « prix » $q$ d'une unité de bien à la date 1 ramenée à la date 0 ?",
+ o:["$q = 1 + r$","$q = r$","$q = \\frac{1}{1+r}$","$q = 1 - r$"],
+ c:2, w:"C'est le facteur d'actualisation : <b>$q = \\frac{1}{1+r}$</b>. C'est le prix relatif du bien futur par rapport au bien présent."},
+{t:"Finance : Intertemporel",lvl:3,top:1,
+ q:"Un agent a une utilité linéaire $U = x_0 + a x_1$. À l'équilibre intérieur, quelle relation lie $r$ et $a$ ?",
+ o:["$r = a$","$r = 1 - a$","$r = \\frac{1-a}{a}$","$r = \\frac{1}{a}$"],
+ c:2, w:"Son TMS intertemporel vaut $a$. À l'équilibre, $a = \\frac{1}{1+r} \\implies 1+r = 1/a \\implies$ <b>$r = \\frac{1-a}{a}$</b>."},
+{t:"Finance : Intertemporel",lvl:2,
+ q:"Si le paramètre $a$ augmente (l'agent accorde plus d'importance au futur), que se passe-t-il pour le taux d'intérêt $r$ ?",
+ o:["Il augmente fortement","Il diminue","Il devient négatif","Il reste constant"],
+ c:1, w:"Si les agents aiment plus le futur, ils veulent tous épargner. L'offre de fonds prêtables augmente, ce qui fait <b>baisser le taux d'intérêt $r$</b> (le prix du futur $q$ augmente)."},
+{t:"Finance : Intertemporel",lvl:1,
+ q:"Qu'est-ce qu'un taux court ($r_t$) ?",
+ o:["Le taux d'une obligation sur 10 ans","Le taux applicable d'une période $t$ à la période suivante $t+1$","Le taux nominal moins l'inflation","Un taux réservé aux banques"],
+ c:1, w:"Un taux court relie <b>deux dates adjacentes</b> ($t$ à $t+1$), par opposition au taux long qui couvre toute la période jusqu'à maturité."},
+{t:"Finance : Intertemporel",lvl:2,
+ q:"Pour ramener un flux $C_3$ perçu en $t=3$ à sa valeur en $t=0$, quelle est la formule d'actualisation avec les taux courts ?",
+ o:["$\\frac{C_3}{(1+r_1)(1+r_2)(1+r_3)}$","$\\frac{C_3}{(1+r_3)^3}$","$C_3 - r_1 - r_2 - r_3$","$\\frac{C_3}{3 \\times r_3}$"],
+ c:0, w:"On actualise période par période en utilisant le taux court de chaque période : <b>diviser par $(1+r_1)(1+r_2)(1+r_3)$</b>."},
+{t:"Finance : Intertemporel",lvl:2,top:1,
+ q:"Le Taux Long obligataire $R_T$ est déterminé par une obligation qui, à $t=0$, a une valeur (prix) égale à :",
+ o:["Zéro","1 (elle cote au pair)","La somme des taux courts","$R_T \\times T$"],
+ c:1, w:"Par définition, le taux long $R_T$ est le coupon tel que le prix actuel de l'obligation (qui verse $R_T$ chaque année et rembourse le principal 1 à la fin) soit <b>exactement 1</b>."},
+{t:"Finance : Intertemporel",lvl:3,
+ q:"Si tous les taux courts futurs sont égaux et valent $r$, que vaudra le taux long obligataire $R_T$ ?",
+ o:["$R_T = r^T$","$R_T = r \\times T$","$R_T = r$","$R_T = 0$"],
+ c:2, w:"Si la structure des taux est plate (tous les taux courts sont égaux à $r$), le coupon qui maintient l'obligation au pair est simplement <b>$R_T = r$</b>."},
+{t:"Finance : Intertemporel",lvl:3,
+ q:"Soit $r_1=25\\%$, $r_2=10\\%$. Le prix en $t=0$ de 1€ reçu en $t=2$ est :",
+ o:["$\\frac{1}{1.25 + 1.10}$","$\\frac{1}{1.25 \\times 1.10} = \\frac{1}{1.375}$","$1.375$","$\\frac{1}{0.35}$"],
+ c:1, w:"On actualise avec les deux taux courts successifs : $\\frac{1}{(1+0,25)(1+0,10)} = \\frac{1}{1,25 \\times 1,1} =$ <b>$1 / 1,375$</b>."},
+{t:"Finance : Intertemporel",lvl:1,
+ q:"La valorisation d'une obligation repose sur le principe de :",
+ o:["L'actualisation des flux futurs (coupons et principal)","La maximisation de l'utilité du courtier","La vente à découvert","La convexité des préférences"],
+ c:0, w:"Le prix d'une obligation est la somme de ses flux de trésorerie futurs <b>actualisés</b> aux taux du marché."},
+{t:"Finance : Intertemporel",lvl:2,
+ q:"Dans l'équation de valorisation $1 = \\frac{R_2}{1+r_1} + \\frac{1+R_2}{(1+r_1)(1+r_2)}$, à quoi correspond le « $1+R_2$ » final ?",
+ o:["Aux impôts payés","Au paiement du dernier coupon $R_2$ plus le remboursement du principal ($1$)","Au bénéfice net de la banque","À la marge d'arbitrage"],
+ c:1, w:"À la date d'échéance, l'émetteur paie le <b>dernier coupon ($R_2$) et rembourse le capital initial ($1$)</b>."},
+{t:"Finance : Intertemporel",lvl:2,
+ q:"Dans le modèle binomial à 1 période, combien d'états de la nature possibles y a-t-il demain ?",
+ o:["Une infinité","Exactement 2 (Hausse ou Baisse)","3 (Hausse, Stagnation, Baisse)","Cela dépend du nombre d'agents"],
+ c:1, w:"Le modèle <b>binomial</b> (comme son nom l'indique) simplifie l'incertitude à exactement <b>2 états de la nature</b> : H (Hausse) et B (Baisse)."},
+{t:"Finance : Intertemporel",lvl:1,
+ q:"Dans le modèle binomial, que garantit l'actif sans risque (ASR) ?",
+ o:["Un rendement qui suit l'inflation","Le même rendement $(1+r)$ quel que soit l'état de la nature demain","Le remboursement si la banque fait faillite","Un rendement toujours supérieur à l'actif risqué"],
+ c:1, w:"Par définition, l'Actif Sans Risque verse <b>$1+r$ dans tous les cas</b> (en H comme en B)."},
+
+/* ---------- PART 4: FINANCE BINOMIAL & ARBITRAGE (20 Qs) ---------- */
+{t:"Finance : Arbitrage",lvl:1,
+ q:"Qu'est-ce qu'une Opportunité d'Arbitrage ?",
+ o:["Un moyen de faire un profit certain sans mise initiale et sans risque","Une négociation amiable entre deux firmes","L'achat d'un actif risqué avec de l'épargne","Une taxe sur les profits financiers"],
+ c:0, w:"C'est le « repas gratuit » : la possibilité de générer un <b>profit positif à coup sûr sans prendre de risque ni engager de capital propre</b>."},
+{t:"Finance : Arbitrage",lvl:1,top:1,
+ q:"Dans un marché avec ASR (taux $r$) et Actif Risqué ($\\bar{r}$ en hausse, $\\underline{r}$ en baisse), quelle est la condition stricte d'Absence d'Opportunité d'Arbitrage (AOA) ?",
+ o:["$r = \\bar{r} = \\underline{r}$","$\\underline{r} < r < \\bar{r}$","$r > \\bar{r}$","$r < 0$"],
+ c:1, w:"Si $r$ n'est pas <b>strictement compris entre $\\underline{r}$ et $\\bar{r}$</b>, l'un des actifs domine l'autre à coup sûr, créant une opportunité d'arbitrage immédiate."},
+{t:"Finance : Arbitrage",lvl:2,
+ q:"Que signifie l'expression « marché complet » dans la théorie financière ?",
+ o:["Tous les actifs du monde y sont cotés","Il n'y a pas de frais de transaction","On peut répliquer (synthétiser) n'importe quel flux financier futur à l'aide des actifs fondamentaux existants","L'État garantit les pertes"],
+ c:2, w:"Un marché est <b>complet</b> si la base d'actifs (le portefeuille fondamental) permet de générer mathématiquement tous les états de la nature possibles (famille génératrice)."},
+{t:"Finance : Arbitrage",lvl:2,
+ q:"Lorsqu'on synthétise un actif $X = a_1 A^{SR} + a_2 A^R$, que signifie une quantité $a_1 < 0$ ?",
+ o:["Une erreur de calcul","Un emprunt au taux sans risque (vente à découvert)","Un prêt à la banque","Une perte sèche"],
+ c:1, w:"Acheter une quantité négative d'actif sans risque signifie concrètement <b>emprunter de l'argent</b> au taux $r$."},
+{t:"Finance : Arbitrage",lvl:2,top:1,
+ q:"Le Théorème Fondamental de la Finance stipule qu'en l'absence d'arbitrage, on peut évaluer tout actif via :",
+ o:["Son coût marginal de production","Une espérance actualisée utilisant des Probabilités Risque-Neutres (PRN)","La moyenne géométrique des prix passés","Uniquement la loi de l'offre et la demande"],
+ c:1, w:"L'AOA implique l'existence de probabilités $\\pi$ (dites risque-neutres) telles que le prix de tout actif soit son <b>espérance mathématique actualisée</b> sous cette mesure : $P = \\frac{1}{1+r}\\mathbb{E}^\\pi[X]$."},
+{t:"Finance : Arbitrage",lvl:3,
+ q:"Quelle est la formule exacte de la Probabilité Risque-Neutre associée à l'état de Hausse ($\\pi^H$) ?",
+ o:["$\\pi^H = \\frac{\\bar{r} - r}{\\bar{r} - \\underline{r}}$","$\\pi^H = \\frac{r - \\underline{r}}{\\bar{r} - \\underline{r}}$","$\\pi^H = \\frac{r + \\underline{r}}{2}$","$\\pi^H = 1 - r$"],
+ c:1, w:"La probabilité de l'état favorable (H) qui calibre le marché s'écrit : <b>$\\pi^H = \\frac{r - \\underline{r}}{\\bar{r} - \\underline{r}}$</b>."},
+{t:"Finance : Arbitrage",lvl:2,
+ q:"Sur un marché, l'ASR rapporte $r=5\\%$. L'Actif Risqué rapporte $\\bar{r}=25\\%$ et $\\underline{r}=0\\%$. Que vaut $\\pi^H$ ?",
+ o:["$0.50$","$0.80$","$0.20$","$0.05$"],
+ c:2, w:"On applique la formule : $\\pi^H = \\frac{5 - 0}{25 - 0} = \\frac{5}{25} =$ <b>$0.20$ (soit $20\\%$)</b>."},
+{t:"Finance : Arbitrage",lvl:2,
+ q:"Dans le même exemple, que vaut la probabilité risque-neutre de baisse $\\pi^B$ ?",
+ o:["$0.20$","$0.50$","$0.80$","$0.95$"],
+ c:2, w:"Puisque la somme des probabilités vaut 1, $\\pi^B = 1 - \\pi^H = 1 - 0.20 =$ <b>$0.80$</b>. (Ou formule : $\\frac{25 - 5}{25 - 0}$)."},
+{t:"Finance : Arbitrage",lvl:3,
+ q:"Ceteris paribus, si le taux sans risque $r$ augmente, que fait la probabilité risque-neutre de hausse $\\pi^H$ ?",
+ o:["Elle diminue","Elle reste constante","Elle augmente","Elle devient négative"],
+ c:2, w:"D'après $\\pi^H = \\frac{r - \\underline{r}}{\\bar{r} - \\underline{r}}$, si le numérateur $r$ augmente, <b>$\\pi^H$ augmente</b>. Le marché attribue un poids « risque-neutre » plus fort à la hausse pour compenser le fait que le sans-risque est devenu plus rémunérateur."},
+{t:"Finance : Arbitrage",lvl:2,
+ q:"Soit un flux valant $X_H = 15$ et $X_B = 4$. Si $\\pi^H = 0.2$ et $r = 5\\%$, comment écrit-on son prix $P(X)$ ?",
+ o:["$P(X) = \\frac{15 \\times 0.2 + 4 \\times 0.8}{1.05}$","$P(X) = 15 \\times 0.2 + 4 \\times 0.8$","$P(X) = \\frac{15 + 4}{2}$","$P(X) = \\frac{15 \\times 0.8 + 4 \\times 0.2}{1.05}$"],
+ c:0, w:"C'est l'espérance actualisée sous PRN : <b>$\\frac{1}{1+0.05} (15 \\times 0.2 + 4 \\times 0.8)$</b>."},
+{t:"Finance : Arbitrage",lvl:2,top:1,
+ q:"Une option d'achat (Call) donne le droit d'acheter le sous-jacent au prix d'exercice $K$. Si le sous-jacent vaut $X$, quel est son payoff terminal ?",
+ o:["$\\max(K - X, 0)$","$\\max(X - K, 0)$","$X - K$ (toujours)","$X + K$"],
+ c:1, w:"On exerce le Call seulement si l'actif vaut plus que le prix d'exercice ($X > K$). Le payoff (flux terminal) est donc <b>$\\max(X - K, 0)$</b>."},
+{t:"Finance : Arbitrage",lvl:2,
+ q:"Une option de vente (Put) avec $K = 7.5$. Si le sous-jacent finit à $X = 6$, quel est le payoff ?",
+ o:["$1.5$","$0$","$-1.5$","$6$"],
+ c:0, w:"Le payoff du Put est $\\max(K - X, 0)$. Ici $\\max(7.5 - 6, 0) =$ <b>$1.5$</b>. (J'ai le droit de vendre 7.5 quelque chose qui ne vaut que 6 sur le marché)."},
+{t:"Finance : Arbitrage",lvl:2,
+ q:"Même Put avec $K = 7.5$. Si le sous-jacent finit à $X = 8$, quel est le payoff ?",
+ o:["$0.5$","$-0.5$","$0$","$8$"],
+ c:2, w:"On n'exerce pas l'option de vente si le prix de marché (8) est supérieur au prix garanti (7.5). Le payoff est <b>$0$</b>."},
+{t:"Finance : Arbitrage",lvl:3,
+ q:"Dans un arbre binomial à 2 périodes (dates 0, 1, 2) qui recombine (hausse puis baisse = baisse puis hausse), combien y a-t-il d'états finaux distincts en $t=2$ ?",
+ o:["2","3","4","8"],
+ c:1, w:"Il y a HH, HB (qui est équivalent à BH), et BB. Cela fait <b>3 états finaux</b> distincts."},
+{t:"Finance : Arbitrage",lvl:3,
+ q:"Sur 2 périodes, le prix d'un actif s'écrit $P(X) = \\frac{1}{(1+r)^2} (X_{HH} (\\pi^H)^2 + X_{HB} 2\\pi^H\\pi^B + X_{BB} (\\pi^B)^2)$. D'où vient le « 2 » au milieu ?",
+ o:["Du taux d'intérêt sur 2 ans","Il y a 2 chemins menant à l'état central (Hausse-Baisse et Baisse-Hausse)","C'est le nombre de périodes","C'est une erreur de formule"],
+ c:1, w:"L'arbre binomial se recombine : l'état intermédiaire peut être atteint par <b>2 chemins distincts (HB ou BH)</b>, on additionne donc leurs probabilités."},
+{t:"Finance : Arbitrage",lvl:2,
+ q:"Si un sous-marché $M_3$ a des caractéristiques $\\underline{r}=0\\%$ et $\\bar{r}=8\\%$ avec un taux sans risque global de $5\\%$. Que vaut $\\pi^H$ sur $M_3$ ?",
+ o:["$5/8$","$3/8$","$1/2$","$5/10$"],
+ c:0, w:"Formule $\\pi^H = \\frac{r - \\underline{r}}{\\bar{r} - \\underline{r}} = \\frac{5 - 0}{8 - 0} =$ <b>$5/8$</b>."},
+{t:"Finance : Arbitrage",lvl:1,
+ q:"Le modèle binomial permet, en multipliant les périodes (temps continu), d'aboutir à un célèbre modèle financier :",
+ o:["Cournot-Nash","Black and Scholes","Rothschild-Stiglitz","Akerlof"],
+ c:1, w:"À la limite continue, l'arbre binomial converge vers le mouvement brownien géométrique utilisé dans le modèle de <b>Black & Scholes</b> pour évaluer les options."},
+{t:"Finance : Arbitrage",lvl:1,
+ q:"Pourquoi utiliser les probabilités risque-neutres (PRN) plutôt que les vraies probabilités (subjectives) des agents ?",
+ o:["Parce que les vraies probabilités sont toujours 50/50","Parce que la formule sous PRN intègre mathématiquement la prime de risque exigée par le marché, permettant une actualisation au taux sans risque","Parce que les agents n'ont pas d'aversion au risque en réalité","C'est uniquement pour simplifier les calculs sans fondement"],
+ c:1, w:"La magie du TFF : les probabilités risque-neutres « tordent » les vraies probabilités pour <b>absorber la prime de risque</b>. On peut alors simplement actualiser l'espérance au taux sans risque $r$."},
+{t:"Finance : Arbitrage",lvl:2,
+ q:"Que suppose implicitement l'évaluation par arbitrage (synthèse) ?",
+ o:["L'absence de coûts de transaction et la possibilité de vendre à découvert","Que le marché n'a qu'un seul actif","Que tous les investisseurs sont neutres au risque","Que l'État fixe les prix"],
+ c:0, w:"La réplication nécessite de pouvoir emprunter/prêter au taux $r$ et d'acheter/vendre l'actif risqué sans limite, supposant <b>l'absence de frictions et la vente à découvert possible</b>."},
+{t:"Finance : Arbitrage",lvl:2,
+ q:"Si le prix de marché d'une option est inférieur à son prix calculé par arbitrage $P(C)$, que doit faire un arbitragiste ?",
+ o:["Rien, le marché a raison","Acheter l'option (sous-évaluée) et vendre le portefeuille de réplication","Vendre l'option et acheter le portefeuille","Attendre l'échéance"],
+ c:1, w:"La règle d'or : acheter ce qui est « pas cher » (l'option) et vendre ce qui est « cher » (le portefeuille de synthèse) pour encaisser la <b>différence sans risque</b>."},
+
+/* ---------- PART 5: INFO CACHEE - AKERLOF (10 Qs) ---------- */
+{t:"Info Cachée : Akerlof",lvl:1,top:1,
+ q:"Dans le modèle d'Akerlof (les *Lemons*), sur quoi porte l'asymétrie d'information ?",
+ o:["L'acheteur et le vendeur ignorent tous deux la qualité de la voiture","L'acheteur connait la qualité, mais pas le vendeur","Le vendeur connait la qualité intrinsèque de sa voiture, mais l'acheteur ne peut pas l'observer avant l'achat","Le gouvernement cache les informations sur la qualité"],
+ c:2, w:"C'est une situation d'<b>information cachée (anti-sélection)</b> : le vendeur détient une information privée sur son bien que l'acheteur n'a pas."},
+{t:"Info Cachée : Akerlof",lvl:1,
+ q:"Ne pouvant distinguer les bonnes des mauvaises voitures, que fait l'acheteur rationnel ?",
+ o:["Il n'achète plus que des voitures neuves","Il propose un prix basé sur la qualité *moyenne* espérée du marché","Il paie le prix fort au hasard","Il demande l'avis d'un expert dans 100% des cas"],
+ c:1, w:"Incapable de faire le tri, l'acheteur n'est prêt à payer que la valeur correspondant à la <b>qualité moyenne</b> (pondérée des probabilités) du marché."},
+{t:"Info Cachée : Akerlof",lvl:2,
+ q:"Quelle est la réaction des vendeurs de voitures de très bonne qualité face à ce prix moyen ?",
+ o:["Ils sont ravis et vendent plus vite","Leur utilité de réserve (valeur de leur voiture) est supérieure au prix moyen : ils refusent de vendre et quittent le marché","Ils baissent encore plus leur prix","Ils vendent à crédit"],
+ c:1, w:"Le prix moyen est trop bas pour eux ($P_{moyen} < U_{réserve}^{bonne}$). Ils <b>se retirent du marché</b>, c'est l'anti-sélection."},
+{t:"Info Cachée : Akerlof",lvl:2,top:1,
+ q:"Une fois les bonnes voitures retirées du marché, que se passe-t-il ?",
+ o:["La qualité moyenne augmente","La qualité moyenne du marché *s'effondre*, l'acheteur révise son prix à la baisse, ce qui peut mener à la disparition totale du marché","Rien, le marché s'équilibre","Les vendeurs de mauvaises voitures augmentent leurs prix"],
+ c:1, w:"L'éviction des bons produits fait chuter la moyenne. Les acheteurs baissent leur offre, évincant la qualité moyenne, etc. C'est la <b>spirale de la sélection adverse</b> menant au *market failure*."},
+{t:"Info Cachée : Akerlof",lvl:2,
+ q:"Akerlof modélise une infinité de qualités. Mathématiquement, comment cela se traduit-il sur le prix proposé $P(X)$ ?",
+ o:["$P(X) = \\sum x_i$","$P(X) = \\mathbb{E}[U | U \\le P]$ : L'espérance de l'utilité sachant que seuls ceux valorisant le bien moins que $P$ acceptent de vendre","$P(X) = 0$","$P(X)$ est infini"],
+ c:1, w:"L'acheteur rationnel sait que si son prix est $P$, seuls les vendeurs dont la qualité vaut moins que $P$ accepteront de vendre. Il calcule donc son <b>espérance conditionnelle</b>."},
+{t:"Info Cachée : Akerlof",lvl:1,
+ q:"L'anti-sélection (sélection adverse) intervient :",
+ o:["Après la signature du contrat (aléa moral)","Avant la signature du contrat, en raison d'une information privée préexistante","Uniquement sur les marchés financiers","Quand l'État fixe les prix"],
+ c:1, w:"L'anti-sélection est un problème pré-contractuel lié aux <b>caractéristiques cachées</b> des agents ou des biens."},
+{t:"Info Cachée : Akerlof",lvl:2,
+ q:"Si $\\alpha$ est la proportion de bonnes voitures et $(1-\\alpha)$ la proportion de mauvaises, le prix moyen est :",
+ o:["$P = \\alpha U_{mauvaise} + (1-\\alpha) U_{bonne}$","$P = \\alpha U_{bonne} + (1-\\alpha) U_{mauvaise}$","$P = \\alpha / (1-\\alpha)$","$P = U_{bonne} - U_{mauvaise}$"],
+ c:1, w:"Le prix reflète l'espérance mathématique classique : <b>$P = \\alpha U_{bonne} + (1-\\alpha) U_{mauvaise}$</b>."},
+{t:"Info Cachée : Akerlof",lvl:3,
+ q:"Si un marché comporte 3 types d'actifs de qualités décroissantes (1, 2, 3), avec $U_1 > U_2 > U_3$. L'équilibre peut aboutir à l'éviction de :",
+ o:["L'actif 3 uniquement","L'actif 1 uniquement, ou des actifs 1 et 2 séquentiellement","Tous les actifs (il ne reste que 1)","L'acheteur"],
+ c:1, w:"L'anti-sélection élimine les meilleurs en premier. L'actif 1 part en premier, puis si le prix moyen (2 et 3) est encore trop bas, l'actif 2 <b>part à son tour</b>."},
+{t:"Info Cachée : Akerlof",lvl:1,
+ q:"Pour surmonter le problème d'Akerlof, quelle solution le cours étudie-t-il immédiatement après ?",
+ o:["L'intégration verticale","Le monopole naturel","Le signalement (Spence) par la partie informée","L'interdiction de vendre d'occasion"],
+ c:2, w:"Spence apporte une solution : si les bons vendeurs peuvent envoyer un <b>signal coûteux</b> prouvant leur qualité, le marché peut à nouveau fonctionner."},
+{t:"Info Cachée : Akerlof",lvl:1,
+ q:"Qui subit la perte sèche dans le modèle d'Akerlof initial ?",
+ o:["La société entière, car des transactions mutuellement avantageuses (bons vendeurs - acheteurs) n'ont pas lieu","Les mauvais vendeurs, qui ne peuvent plus vendre","L'État, qui perçoit moins de taxes","Les banques"],
+ c:0, w:"C'est une défaillance de marché : les acheteurs aimeraient acheter les bonnes voitures, et les vendeurs aimeraient les vendre, mais l'asymétrie bloque la transaction, créant une <b>perte de surplus social</b>."},
+
+/* ---------- PART 6: INFO CACHEE - SIGNAL (SPENCE) (15 Qs) ---------- */
+{t:"Info Cachée : Signal",lvl:1,top:1,
+ q:"Dans le modèle de Spence (1973), le diplôme scolaire sert de :",
+ o:["Preuve d'acquisition de compétences productives","Signal coûteux permettant aux candidats très productifs de se démarquer (même s'il ne sert à rien productivement)","Taxe imposée par les universités","Variable aléatoire pour le recruteur"],
+ c:1, w:"Dans ce modèle pur, l'éducation n'augmente pas la productivité. Elle est juste un <b>filtre (signal)</b> pour différencier les profils."},
+{t:"Info Cachée : Signal",lvl:2,
+ q:"Pour que le signal fonctionne, Spence identifie une condition sine qua non appelée « Single-Crossing » (Simple Croisement). Que signifie-t-elle ?",
+ o:["Le signal doit avoir un coût marginal plus élevé pour le type fort que pour le type faible","Le coût marginal du signal doit être *plus faible* (plus facile) pour le type fort que pour le type faible","Les deux types doivent payer exactement le même prix pour le signal","Le coût total doit être nul"],
+ c:1, w:"Si étudier est aussi dur pour les deux, le signal ne sert à rien. Il faut que ce soit <b>intrinsèquement moins coûteux/pénible pour le type fort ($C'_1(e) < C'_2(e)$)</b>."},
+{t:"Info Cachée : Signal",lvl:1,
+ q:"Qu'est-ce qu'un « équilibre séparateur » ?",
+ o:["Un équilibre où les deux types choisissent le même contrat","Un équilibre où le marché s'effondre","Un équilibre où les agents de types différents choisissent des signaux différents, révélant ainsi leur vrai type","Un équilibre sans entreprises"],
+ c:2, w:"En choisissant des actions distinctes ($e_1 \\neq e_2$), les agents <b>s'auto-sélectionnent</b>. L'information cachée est révélée."},
+{t:"Info Cachée : Signal",lvl:2,top:1,
+ q:"Dans la recherche du « meilleur » équilibre séparateur (Riley), quel signal $e_2$ doit choisir le type faible ?",
+ o:["Un signal très élevé","Le même que le type 1","$e_2 = 0$ (aucun signal)","La moyenne des deux"],
+ c:2, w:"Le signal étant une pure perte, le type faible, qui est révélé de toute façon, n'a aucun intérêt économique à émettre un signal. On fixe <b>$e_2 = 0$</b>."},
+{t:"Info Cachée : Signal",lvl:3,
+ q:"Pour l'équilibre séparateur, la « contrainte d'imitation » (ou incitation) du type 2 stipule que :",
+ o:["$U_2(S_2, e_2) \\ge U_2(S_1, e_1)$ : Le type faible préfère son propre contrat plutôt que de s'épuiser à mimer le type fort","$U_2(S_2, e_2) = 0$","$U_1(S_1, e_1) \\ge U_2(S_2, e_2)$","Le type 2 doit avoir un profit négatif"],
+ c:0, w:"C'est la clé : la firme doit exiger un signal $e_1$ tellement élevé que le type 2 <b>n'a pas intérêt à l'imiter</b> malgré le salaire $S_1$ plus attractif."},
+{t:"Info Cachée : Signal",lvl:2,
+ q:"Si l'utilité du travailleur est $U = S - C(e)$. Type 1 a un coût $C_1(e)=1/2 e^2$, Type 2 a un coût $C_2(e)=e^2$. Les salaires offerts (en CPP) sont $S_1=2$ et $S_2=1$. Pour que le type 2 n'imite pas, il faut :",
+ o:["$1 - e_2^2 \\ge 2 - e_1^2$","$2 - 1/2 e_1^2 = 0$","$1 = 2$","$S_1 = S_2$"],
+ c:0, w:"On applique $U_2(S_2, e_2) \\ge U_2(S_1, e_1)$ : <b>$1 - (e_2)^2 \\ge 2 - (e_1)^2$</b>."},
+{t:"Info Cachée : Signal",lvl:3,
+ q:"En reprenant $1 - e_2^2 \\ge 2 - e_1^2$ et $e_2=0$, on obtient $1 \\ge 2 - e_1^2 \\implies e_1^2 \\ge 1$. Que représente cette borne $e_1 \\ge 1$ ?",
+ o:["La condition de rationalité du type 1","Le signal minimal que doit émettre le type 1 pour décourager le type 2 de l'imiter","Le salaire maximum","Le coût total"],
+ c:1, w:"Si $e_1 < 1$, le type 2 trouverait rentable de faire l'effort pour obtenir le salaire $S_1=2$. Le type 1 doit donc faire <b>au moins $e_1 = 1$</b> pour se séparer."},
+{t:"Info Cachée : Signal",lvl:2,
+ q:"Qu'est-ce qu'un « équilibre mélangeur » (pooling) dans ce modèle ?",
+ o:["L'employeur refuse tout le monde","Les deux types émettent le même signal $e$ et reçoivent le même salaire moyen $S$","Le type 1 imite le type 2","Le type 2 est évincé"],
+ c:1, w:"Dans un équilibre mélangeur, le signal échoue à différencier : les deux types agissent à l'identique, et l'employeur paie le <b>salaire moyen</b>, ramenant au problème d'Akerlof."},
+{t:"Info Cachée : Signal",lvl:1,
+ q:"Pourquoi le modèle original de Spence est-il souvent critiqué sur le plan social ?",
+ o:["Parce qu'il interdit l'éducation","Parce qu'à l'équilibre séparateur, le type fort dépense des ressources ($e_1$) purement pour signaler, ce qui détruit de la valeur (pas de hausse de productivité)","Parce que le type faible gagne plus que le type fort","Parce qu'il ignore l'aversion au risque"],
+ c:1, w:"Le signal est socialement un <b>gaspillage de ressources</b> (pure perte) s'il n'augmente pas la productivité, servant uniquement de filtre."},
+{t:"Info Cachée : Signal",lvl:3,
+ q:"Dans l'exercice du cours, pour que le type 1 ne veuille pas imiter le type 2 ($e_2=0, S_2=1$), on a $U_1(S_1, e_1) \\ge U_1(S_2, 0) \\implies 2 - 1/2 e_1^2 \\ge 1$. Cela donne :",
+ o:["$e_1^2 \\ge 2$","$e_1^2 \\le 2$","$e_1 = 0$","$e_1$ infini"],
+ c:1, w:"$2 - 1/2 e_1^2 \\ge 1 \\implies 1 \\ge 1/2 e_1^2 \\implies 2 \\ge e_1^2$. C'est la <b>borne supérieure</b> du signal (si $e_1$ est trop grand, même le type fort préfère abandonner)."},
+{t:"Info Cachée : Signal",lvl:2,top:1,
+ q:"Finalement, on a $1 \\le e_1^2 \\le 2$. Quel signal $e_1^*$ le type 1 va-t-il choisir rationnellement (le meilleur équilibre séparateur) ?",
+ o:["$e_1^* = \\sqrt{2}$ (le max)","$e_1^* = 1$ (le min)","$e_1^* = 0$","$e_1^* = 1.5$"],
+ c:1, w:"Puisque le signal est coûteux, le type 1 choisit le <b>plus petit signal suffisant</b> pour se différencier : <b>$e_1 = 1$</b>."},
+{t:"Info Cachée : Signal",lvl:1,
+ q:"Dans le modèle « Tâche coûteuse », le principe est-il le même que pour l'éducation ?",
+ o:["Oui, c'est exactement la même logique de signalement par un coût asymétrique","Non, c'est l'inverse","Non, la tâche rapporte de l'argent au travailleur","Non, le modèle exige l'information parfaite"],
+ c:0, w:"Que ce soit un diplôme ou une épreuve technique (tâche coûteuse), le mécanisme mathématique <b>reste identique (Single-crossing)</b>."},
+{t:"Info Cachée : Signal",lvl:2,
+ q:"Dans le modèle de Spence, que se passe-t-il si les firmes n'ont PAS de pouvoir de marché (elles sont en CPP) ?",
+ o:["Le profit des firmes est nul, elles offrent un salaire égal à la productivité ($S = \\pi$)","Elles exploitent les travailleurs","L'équilibre séparateur n'existe plus","Le salaire du type 2 tombe à zéro"],
+ c:0, w:"En concurrence parfaite entre firmes, la <b>contrainte de profit nul</b> ($S_1 = \\pi_1$, $S_2 = \\pi_2$) s'applique, simplifiant le calcul des salaires."},
+{t:"Info Cachée : Signal",lvl:2,
+ q:"Peut-on dire qu'un équilibre de Spence est Pareto-optimal par rapport à l'information parfaite ?",
+ o:["Oui, c'est l'optimum de premier rang","Non, c'est un optimum de second rang, dégradé par le coût inutile du signal","Non, c'est le troisième rang","Oui, grâce à l'intervention de l'État"],
+ c:1, w:"Par rapport à un monde d'information parfaite où chacun serait payé à sa juste valeur sans effort, ici le type 1 <b>perd le coût du signal</b>. C'est un équilibre de <b>second rang</b>."},
+{t:"Info Cachée : Signal",lvl:1,
+ q:"Pour résumer l'approche : Face à l'anti-sélection (Akerlof), Spence propose de rendre l'information observable via :",
+ o:["Une déclaration sur l'honneur","Un signal que le type faible trouve trop coûteux à imiter","Une obligation légale","Une loterie"],
+ c:1, w:"Le cœur de la théorie du signal : la crédibilité repose sur le fait qu'il est <b>trop difficile/coûteux de tricher</b> pour le mauvais type."},
+
+/* ---------- PART 7: INFO CACHEE - SCREENING & ASSURANCE (15 Qs) ---------- */
+{t:"Screening & Assurance",lvl:1,top:1,
+ q:"Contrairement au modèle de Spence où l'agent (informé) bouge en premier, dans le modèle de Rothschild-Stiglitz (Assurance), qui bouge en premier ?",
+ o:["L'assuré (informé)","L'assureur (Principal, non informé), qui propose un *menu* de contrats pour faire s'auto-sélectionner les clients","L'État (Régulateur)","Personne, les actions sont simultanées"],
+ c:1, w:"C'est la différence entre <b>Signal</b> (l'agent envoie $e$) et <b>Screening</b> (le principal propose un menu $(w,t)$ ou $(q,p)$ pour trier)."},
+{t:"Screening & Assurance",lvl:2,
+ q:"Dans le modèle d'assurance de R-S, pourquoi le contrat d'assurance complète échoue-t-il à un tarif moyen ?",
+ o:["Parce qu'il est interdit par la loi","Parce que les individus à bas risque (qui payent trop pour ce qu'ils coûtent) refusent le contrat (retour à Akerlof)","Parce que les risques sont incalculables","Parce que le risque systémique est trop fort"],
+ c:1, w:"Au tarif moyen, le contrat est défavorable au « bas risque ». Il fuit le marché, laissant l'assureur face aux « hauts risques » (qui vont le ruiner au tarif moyen)."},
+{t:"Screening & Assurance",lvl:2,
+ q:"Comment l'assureur fait-il pour séparer les deux types de risques ?",
+ o:["Il refuse d'assurer les hauts risques","Il offre l'assurance complète au tarif haut risque, et une assurance *avec franchise* au tarif bas risque","Il demande un certificat médical","Il paye les sinistres en retard"],
+ c:1, w:"La <b>franchise</b> agit comme mécanisme de screening : le haut risque (qui a plus de chances d'avoir l'accident) refuse la franchise, tandis que le bas risque l'accepte en échange d'une prime plus basse."},
+{t:"Screening & Assurance",lvl:2,
+ q:"Le contrat $(D-F, P_2(D-F))$ de l'assureur pour le bas risque doit vérifier quelle contrainte vis-à-vis du haut risque ?",
+ o:["Contrainte de rationalité du haut risque","Contrainte d'incitation : le haut risque doit préférer l'assurance complète (sans franchise) à ce contrat avec franchise","Il ne doit vérifier aucune contrainte","La contrainte budgétaire de l'État"],
+ c:1, w:"Pour que le tri fonctionne, il faut s'assurer que le haut risque ne soit pas tenté par la prime basse : la <b>franchise $F$ doit être suffisamment dissuasive</b> pour lui."},
+{t:"Screening & Principal-Agent",lvl:1,top:1,
+ q:"Modèle Principal-Agent (Broker) : Le broker offre $(q, p)$. Le client a une utilité $U = \\alpha q - p$. Les 2 types sont $\\bar{\\alpha}$ (fort) et $\\underline{\\alpha}$ (faible). Qu'est-ce que le broker veut maximiser ?",
+ o:["L'utilité du client","Son profit $\\pi = p - C(q)$","La quantité $q$ vendue au détriment du prix","L'égalité sociale"],
+ c:1, w:"Le Principal agit rationnellement pour <b>maximiser son propre profit espéré</b>."},
+{t:"Screening & Principal-Agent",lvl:2,
+ q:"En information PARFAITE (Premier Rang), que fait le broker ?",
+ o:["Il laisse un surplus positif au client","Il fixe $p = \\alpha q$ pour accaparer 100% du surplus ($U=0$) et offre la quantité socialement optimale","Il vend à perte","Il fixe une qualité nulle"],
+ c:1, w:"S'il connaît $\\alpha$, il pousse le client à sa limite de rationalité : <b>$U = 0$ (pas de rente)</b>, et offre le $q$ qui maximise $\\alpha q - C(q)$."},
+{t:"Screening & Principal-Agent",lvl:2,top:1,
+ q:"En information CACHÉE (Second Rang), si le broker propose le contrat de premier rang, que va faire le type fort ($\\bar{\\alpha}$) ?",
+ o:["Il prendra son contrat dédié","Il mentira et prendra le contrat destiné au type faible ($\\underline{\\alpha}$), car cela lui procurera un surplus positif","Il quittera le marché","Il dénoncera le broker"],
+ c:1, w:"Le contrat faible est moins cher. Comme le type fort valorise beaucoup $q$, il gagne à prendre ce contrat pas cher : $\\bar{\\alpha}\\underline{q} - \\underline{p} > 0$. Il a <b>intérêt à mentir</b>."},
+{t:"Screening & Principal-Agent",lvl:3,
+ q:"Pour l'empêcher de mentir, la contrainte d'incitation du type fort $\\bar{I}$ est : $U_{\\bar{\\alpha}}(\\bar{q}, \\bar{p}) \\ge U_{\\bar{\\alpha}}(\\underline{q}, \\underline{p})$. Conséquence majeure :",
+ o:["Le type fort perd de l'argent","Le broker doit baisser $\\bar{p}$, laissant au type fort une **Rente Informationnelle** ($U > 0$)","Le type faible s'enrichit","Le broker fait faillite"],
+ c:1, w:"C'est le coût de l'asymétrie pour le principal : il doit « payer » le type fort (lui laisser de l'utilité, une <b>rente</b>) pour qu'il révèle sa vraie nature."},
+{t:"Screening & Principal-Agent",lvl:2,
+ q:"Dans la résolution mathématique de l'équilibre de 2nd rang, quelles sont les DEUX contraintes qui sont saturées (liées avec stricte égalité) ?",
+ o:["La rationalité du type fort ($\\bar{R}$) et l'incitation du type faible ($\\underline{I}$)","La rationalité du type faible ($\\underline{R}$) et l'incitation du type fort ($\\bar{I}$)","Les deux rationalités","Les deux incitations"],
+ c:1, w:"Le broker extrait le max de profit. Il pousse le type faible à sa limite ($\\underline{R} = 0$) et donne au type fort juste assez de rente pour qu'il n'imite pas ($\\bar{I}$ saturée)."},
+{t:"Screening & Principal-Agent",lvl:3,
+ q:"Que signifie le principe de « No distortion at the top » (Pas de distorsion au sommet) ?",
+ o:["Le type faible reçoit la qualité optimale","Le type fort ($\\bar{\\alpha}$) se voit offrir la qualité socialement optimale du 1er rang ($\\bar{q}_{2nd} = \\bar{q}_{FB}$)","Le prix est infini","Les riches ne paient pas de taxes"],
+ c:1, w:"La théorie des incitations montre qu'il est toujours sous-optimal de dégrader la qualité du type le plus élevé. On lui offre <b>le $q$ optimal, mais à un prix lui laissant une rente</b>."},
+{t:"Screening & Principal-Agent",lvl:3,top:1,
+ q:"Que subit alors le type faible ($\\underline{\\alpha}$) en termes de qualité ?",
+ o:["Il reçoit lui aussi la qualité optimale","Sa qualité est **distordue à la baisse** (dégradée) par rapport au 1er rang, pour réduire la rente du type fort","Il reçoit une qualité supérieure au 1er rang","Il est obligé de payer une franchise"],
+ c:1, w:"C'est le levier du Principal : en dégradant $\\underline{q}$, le contrat faible devient moins attractif pour le type fort. Cela permet de <b>réduire la rente informationnelle</b> à lui céder."},
+{t:"Screening & Principal-Agent",lvl:3,
+ q:"Soit $\\underline{q} = \\underline{\\alpha} - \\frac{1-\\lambda}{\\lambda}(\\bar{\\alpha} - \\underline{\\alpha})$. Si $\\lambda$ (la proportion de types forts) augmente fortement, que fait le broker ?",
+ o:["Il augmente $\\underline{q}$","Il s'intéresse tellement aux types forts qu'il dégrade encore plus $\\underline{q}$, voire exclut totalement le type faible ($\\underline{q}=0$)","Il donne une rente au type faible","Il passe en CPP"],
+ c:1, w:"Si les types forts sont très nombreux ($\\lambda \\to 1$), leur laisser une grosse rente coûte trop cher. Le broker préfère <b>sacrifier (ou exclure) le type faible</b> en baissant $\\underline{q}$ pour réduire cette rente."},
+{t:"Screening & Principal-Agent",lvl:2,
+ q:"D'après l'exercice du cours avec $C(q) = 1/2 q^2$. En 1er rang, la qualité du type faible $\\underline{\\alpha}=1/3$ serait $\\underline{q} = 1/3$. Au 2nd rang (avec $\\lambda=0.2$ et $\\bar{\\alpha}=2/3$), la qualité est tombée à $\\underline{q} = 1/8$. C'est une illustration numérique de :",
+ o:["La rente du type fort","La distorsion à la baisse pour le type faible (le « Screening »)","La fraude fiscale","L'équilibre de Cournot"],
+ c:1, w:"La qualité offerte au type faible passe de $1/3$ à $1/8$. Cette <b>distorsion sévère</b> empêche le type $\\bar{\\alpha}=2/3$ d'être tenté par le contrat pas cher."},
+{t:"Screening & Principal-Agent",lvl:1,
+ q:"Dans tous ces modèles de Screening (Assurance, Broker, Discrimination de qualité), l'agent ayant la caractéristique la moins favorable pour le marché (bas risque, faible volonté à payer) subit :",
+ o:["Une amende","Une dégradation de son contrat (franchise, qualité moindre) pour préserver la ségrégation des types","Un gain massif d'utilité","L'emprisonnement"],
+ c:1, w:"C'est la règle d'or du 2nd degré de discrimination : <b>distorsion à la baisse</b> pour les types « inférieurs » afin de trier (screener) les types « supérieurs »."},
+{t:"Screening & Principal-Agent",lvl:2,
+ q:"S'il ne pouvait proposer qu'un SEUL contrat (Prix et Quantité uniques) à tous, comment appellerait-on cet équilibre ?",
+ o:["Equilibre Séparateur (Screening)","Equilibre Mélangeur (Pooling)","Paradoxe de Bertrand","Asymétrie positive"],
+ c:1, w:"S'il offre le même $(q,p)$ à tous, on parle d'<b>équilibre Pooling</b> (mélangeur), ce qui n'est généralement pas la solution qui maximise son profit s'il peut proposer un menu discriminant."}
+];
+
+/* ============================================================
+   ÉTAT PERSISTANT (localStorage)
+   ============================================================ */
+const LS_KEY = "quizzMicro100.v3";
+let store = { missed: [], best: null, xp: 0, soundOn: true };
+try { const raw = localStorage.getItem(LS_KEY); if (raw) store = Object.assign(store, JSON.parse(raw)); } catch(e){}
+function save(){ try { localStorage.setItem(LS_KEY, JSON.stringify(store)); } catch(e){} }
+
+Q.forEach((q,i)=>{ q.id = i; });
+
+const THEMES = [...new Set(Q.map(q=>q.t))];
+const MODES = [
+  {k:"all",   n:"Tout le programme", d:"Toutes les questions", f:()=>Q},
+  {k:"top",   n:"Les incontournables", d:"Les notions clés, dont les bonus ⚡", f:()=>Q.filter(q=>q.top)},
+  {k:"lvl3",  n:"Niveau expert", d:"Les questions les plus dures", f:()=>Q.filter(q=>q.lvl===3)},
+  {k:"missed",n:"Mes ratées", d:"Celles que tu as manquées la dernière fois", f:()=>Q.filter(q=>store.missed.includes(q.id))}
+];
+
+let mode = "all", theme = "", len = 20;
+let deck = [], idx = 0, answered = false;
+let pts = 0, nGood = 0, nBad = 0, nSkip = 0, log = [];
+let streak = 0, maxStreak = 0, xpGained = 0;
+let firedMilestones = new Set();
+
+/* ---------- niveaux & titres ---------- */
+const TITLES = [
+  {min:1, max:2, name:"Étudiant", emoji:"🎓"},
+  {min:3, max:4, name:"Assistant", emoji:"📘"},
+  {min:5, max:6, name:"Chargé de TD", emoji:"📐"},
+  {min:7, max:9, name:"Maître de conférences", emoji:"🧠"},
+  {min:10,max:14,name:"Professeur", emoji:"🏛️"},
+  {min:15,max:9999,name:"Prix Nobel d'économie", emoji:"🏆"}
+];
+function lvlOf(xp){ return 1 + Math.floor(xp/100); }
+function titleOf(lvl){ return TITLES.find(t=>lvl>=t.min && lvl<=t.max) || TITLES[0]; }
+
+const $ = s => document.querySelector(s);
+const el = {
+  start:$("#screenStart"), quiz:$("#screenQuiz"), end:$("#screenEnd"),
+  modes:$("#modes"), themeSel:$("#themeSel"), lenSel:$("#lenSel"),
+  startBtn:$("#startBtn"), poolInfo:$("#poolInfo"),
+  qTheme:$("#qTheme"), qLvl:$("#qLvl"), qHot:$("#qHot"), qCount:$("#qCount"),
+  qText:$("#qText"), qOpts:$("#qOpts"), fb:$("#fb"), verdict:$("#verdict"), why:$("#why"),
+  streakline:$("#streakline"), floatPts:$("#floatPts"), qCard:$("#qCard"),
+  nextBtn:$("#nextBtn"), passBtn:$("#passBtn"), passWrap:$("#passWrap"),
+  chip:$("#chip"), chipVal:$("#chipVal"), prog:$("#progbar"),
+  lvlChip:$("#lvlChip"), streakChip:$("#streakChip"), streakVal:$("#streakVal"),
+  endScore:$("#endScore"), endVerdict:$("#endVerdict"),
+  stGood:$("#stGood"), stBad:$("#stBad"), stSkip:$("#stSkip"), badges:$("#badges"),
+  reviewWrap:$("#reviewWrap"), reviewList:$("#reviewList"),
+  againBtn:$("#againBtn"), againMissed:$("#againMissed"), memoNote:$("#memoNote"),
+  toast:$("#toast"), confettiLayer:$("#confettiLayer"), soundBtn:$("#soundBtn"),
+  avatarEmoji:$("#avatarEmoji"), titleText:$("#titleText"), xpText:$("#xpText"), xpFill:$("#xpFill")
+};
+
+/* ---------- son ---------- */
+let actx = null;
+function ctx(){ if(!actx){ try{ actx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } return actx; }
+function tone(freq, t0, dur, type, vol){
+  const c = ctx(); if(!c || !store.soundOn) return;
+  const o = c.createOscillator(), g = c.createGain();
+  o.type = type || "sine"; o.frequency.value = freq;
+  g.gain.value = vol==null?0.15:vol;
+  o.connect(g); g.connect(c.destination);
+  o.start(c.currentTime + t0);
+  g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + t0 + dur);
+  o.stop(c.currentTime + t0 + dur + 0.02);
+}
+function sndGood(){ tone(740,0,.1,"triangle",.12); tone(988,.08,.16,"triangle",.12); }
+function sndBoss(){ tone(660,0,.08,"triangle",.12); tone(880,.08,.08,"triangle",.12); tone(1180,.16,.2,"triangle",.14); }
+function sndBad(){ tone(180,0,.22,"sawtooth",.08); }
+function sndLevel(){ tone(523,0,.1,"square",.1); tone(659,.1,.1,"square",.1); tone(784,.2,.22,"square",.12); }
+function sndMilestone(){ tone(880,0,.08,"sine",.1); tone(1108,.08,.08,"sine",.1); tone(1318,.16,.16,"sine",.12); }
+function updateSoundBtn(){ el.soundBtn.textContent = store.soundOn ? "🔊" : "🔇"; }
+el.soundBtn.addEventListener("click", ()=>{ store.soundOn = !store.soundOn; save(); updateSoundBtn(); });
+updateSoundBtn();
+
+/* ---------- helpers ---------- */
+function runKaTeX(element) {
+  if (window.renderMathInElement) {
+    renderMathInElement(element, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });
+  }
+}
+
+function showToast(msg){
+  el.toast.textContent = msg;
+  el.toast.classList.add("show");
+  setTimeout(()=>el.toast.classList.remove("show"), 1900);
+}
+function launchConfetti(n){
+  const colors = ["#5b3ee0","#c026d3","#b8860b","#e6c455","#1f6b45"];
+  for(let i=0;i<n;i++){
+    const s = document.createElement("i");
+    s.style.left = (Math.random()*100)+"vw";
+    s.style.background = colors[Math.floor(Math.random()*colors.length)];
+    s.style.animationDuration = (2 + Math.random()*1.6)+"s";
+    s.style.transform = `rotate(${Math.random()*360}deg)`;
+    el.confettiLayer.appendChild(s);
+    setTimeout(()=>s.remove(), 4000);
+  }
+}
+function particleBurst(target){
+  const rect = target.getBoundingClientRect();
+  for(let i=0;i<8;i++){
+    const p = document.createElement("span");
+    p.className = "particle";
+    const ang = (Math.PI*2*i)/8;
+    p.style.setProperty("--dx", (Math.cos(ang)*40)+"px");
+    p.style.setProperty("--dy", (Math.sin(ang)*40)+"px");
+    p.style.left = (rect.width/2)+"px";
+    p.style.top = (rect.height/2)+"px";
+    target.appendChild(p);
+    setTimeout(()=>p.remove(), 650);
+  }
+}
+function bumpStreakChip(){
+  el.streakChip.hidden = streak === 0;
+  el.streakVal.textContent = streak;
+  el.streakChip.classList.remove("pop");
+  void el.streakChip.offsetWidth;
+  el.streakChip.classList.add("pop");
+}
+function refreshProfile(){
+  const lvl = lvlOf(store.xp);
+  const t = titleOf(lvl);
+  el.lvlChip.hidden = false;
+  el.lvlChip.textContent = "Niv. " + lvl;
+  el.avatarEmoji.textContent = t.emoji;
+  el.titleText.textContent = t.name + " · Niveau " + lvl;
+  const base = (lvl-1)*100, into = store.xp - base;
+  el.xpText.textContent = into + " / 100 XP";
+  el.xpFill.style.width = into + "%";
+}
+
+/* ---------- écran de départ ---------- */
+function buildStart(){
+  el.modes.innerHTML = "";
+  MODES.forEach(m=>{
+    const n = m.f().length;
+    const b = document.createElement("button");
+    b.className = "mode"; b.type = "button";
+    b.setAttribute("aria-pressed", String(m.k === mode));
+    b.disabled = n === 0;
+    if(n === 0) b.style.opacity = ".4";
+    b.innerHTML = `<b>${m.n}</b><em>${m.d}</em><span class="n">${n} question${n>1?"s":""}</span>`;
+    b.addEventListener("click", ()=>{ mode = m.k; buildStart(); });
+    el.modes.appendChild(b);
+  });
+  if(el.themeSel.options.length === 1){
+    THEMES.forEach(t=>{
+      const o = document.createElement("option");
+      o.value = t; o.textContent = t + " (" + Q.filter(q=>q.t===t).length + ")";
+      el.themeSel.appendChild(o);
+    });
+  }
+  const pool = pick();
+  el.poolInfo.textContent = pool.length
+    ? `${pool.length} question${pool.length>1?"s":""} disponible${pool.length>1?"s":""} · ${Math.min(pool.length, len)} tirée${Math.min(pool.length,len)>1?"s":""} au hasard`
+    : "Aucune question ne correspond à cette combinaison.";
+  el.startBtn.disabled = pool.length === 0;
+  refreshProfile();
+}
+function pick(){
+  let pool = MODES.find(m=>m.k===mode).f();
+  if(theme) pool = pool.filter(q=>q.t===theme);
+  return pool;
+}
+el.themeSel.addEventListener("change", e=>{ theme = e.target.value; buildStart(); });
+el.lenSel.addEventListener("change", e=>{ len = +e.target.value; buildStart(); });
+el.startBtn.addEventListener("click", start);
+el.againBtn.addEventListener("click", ()=>{ show("start"); buildStart(); });
+el.againMissed.addEventListener("click", ()=>{ mode = "missed"; theme = ""; el.themeSel.value=""; start(); });
+
+function show(which){
+  el.start.hidden = which !== "start";
+  el.quiz.hidden  = which !== "quiz";
+  el.end.hidden   = which !== "end";
+  el.chip.hidden  = which !== "quiz";
+  if(which !== "quiz") el.prog.style.width = which === "end" ? "100%" : "0%";
+  window.scrollTo({top:0, behavior:"instant"});
+}
+
+/* ---------- déroulé ---------- */
+function start(){
+  const pool = pick().slice();
+  for(let i = pool.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  deck = pool.slice(0, Math.min(len, pool.length));
+  idx = 0; pts = 0; nGood = 0; nBad = 0; nSkip = 0; log = [];
+  streak = 0; maxStreak = 0; xpGained = 0; firedMilestones = new Set();
+  el.streakChip.hidden = true;
+  show("quiz"); render();
+}
+
+function render(){
+  answered = false;
+  const q = deck[idx];
+  el.qTheme.textContent = q.t;
+  el.qLvl.textContent = "Niveau " + q.lvl;
+  el.qHot.hidden = !q.top;
+  el.qCard.classList.toggle("boss", !!q.top);
+  el.qCard.classList.remove("onfire");
+  el.qCount.textContent = `${idx+1} / ${deck.length}`;
+  el.qText.innerHTML = q.q;
+
+  el.qOpts.innerHTML = "";
+  q.o.forEach((txt,i)=>{
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.className = "opt"; b.type = "button";
+    b.innerHTML = `<span class="key">${String.fromCharCode(97+i)}</span><span>${txt}</span>`;
+    b.addEventListener("click", ()=>answer(i, b));
+    li.appendChild(b); el.qOpts.appendChild(li);
+  });
+
+  el.fb.hidden = true;
+  el.passWrap.hidden = false;
+  el.chipVal.textContent = fmt(pts);
+  el.prog.style.width = (idx/deck.length*100) + "%";
+  el.nextBtn.textContent = idx === deck.length-1 ? "Voir le résultat" : "Question suivante";
+  
+  // Render math !
+  runKaTeX(el.qCard);
+}
+
+function fmt(n){ return (Math.round(n*100)/100).toString().replace(".", ","); }
+
+function answer(i, btnEl){
+  if(answered) return;
+  answered = true;
+  const q = deck[idx];
+  const ok = i === q.c;
+  let xpDelta = 0;
+  if(ok){
+    pts += 0.5; nGood++; streak++; maxStreak = Math.max(maxStreak, streak);
+    store.missed = store.missed.filter(id=>id!==q.id);
+    const base = 10 + Math.min(streak-1, 8) * 2;
+    xpDelta = q.top ? base*2 : base;
+    xpGained += xpDelta;
+    const before = lvlOf(store.xp);
+    store.xp += xpDelta;
+    const after = lvlOf(store.xp);
+    save();
+    if(btnEl) particleBurst(btnEl);
+    if(q.top) sndBoss(); else sndGood();
+    if(after > before){ showToast("⭐ Niveau " + after + " — " + titleOf(after).name + " !"); sndLevel(); launchConfetti(60); }
+    if([3,5,8,12].includes(streak) && !firedMilestones.has(streak)){
+      firedMilestones.add(streak);
+      showToast("🔥 Combo x" + streak + " !");
+      sndMilestone();
+      launchConfetti(30);
+      el.qCard.classList.add("onfire");
+    }
+  } else {
+    pts -= 0.25; nBad++; streak = 0;
+    if(!store.missed.includes(q.id)) store.missed.push(q.id);
+    save();
+    sndBad();
+    el.qCard.classList.remove("shake"); void el.qCard.offsetWidth; el.qCard.classList.add("shake");
+  }
+  bumpStreakChip();
+  refreshProfile();
+  log.push({q, given:i, ok, skipped:false});
+  reveal(q, i, ok ? "good" : "bad", xpDelta);
+}
+
+function skip(){
+  if(answered) return;
+  answered = true;
+  const q = deck[idx];
+  nSkip++; streak = 0;
+  if(!store.missed.includes(q.id)) store.missed.push(q.id);
+  save();
+  bumpStreakChip();
+  log.push({q, given:-1, ok:false, skipped:true});
+  reveal(q, -1, "skip", 0);
+}
+el.passBtn.addEventListener("click", skip);
+
+function reveal(q, given, kind, xpDelta){
+  [...el.qOpts.querySelectorAll(".opt")].forEach((b,i)=>{
+    b.disabled = true;
+    if(i === q.c) b.classList.add("is-good");
+    else if(i === given) b.classList.add("is-bad");
+    else b.classList.add("dim");
+  });
+  el.passWrap.hidden = true;
+  const V = {
+    good:['v-good','Bonne réponse','+0,5 pt'],
+    bad :['v-bad','Mauvaise réponse','−0,25 pt'],
+    skip:['v-skip','Sans réponse','0 pt']
+  }[kind];
+  el.verdict.className = "verdict " + V[0];
+  el.verdict.innerHTML = `${V[1]} <span class="pts">${V[2]}</span>`;
+  if(kind === "good"){
+    el.streakline.hidden = false;
+    el.streakline.textContent = (streak >= 2 ? `🔥 Combo x${streak} — ` : "") + `+${xpDelta} XP` + (q.top ? " (bonus ⚡ x2)" : "");
+  } else {
+    el.streakline.hidden = true;
+  }
+  el.why.innerHTML = q.w;
+  el.fb.hidden = false;
+  el.chipVal.textContent = fmt(pts);
+  if(xpDelta > 0){
+    el.floatPts.textContent = "+" + xpDelta + " XP";
+    el.floatPts.classList.remove("show"); void el.floatPts.offsetWidth; el.floatPts.classList.add("show");
+  }
+  
+  // Render math in feedback
+  runKaTeX(el.why);
+
+  el.nextBtn.focus({preventScroll:true});
+  el.fb.scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+el.nextBtn.addEventListener("click", next);
+function next(){
+  if(idx === deck.length - 1) finish();
+  else { idx++; render(); window.scrollTo({top:0, behavior:"smooth"}); }
+}
+
+function finish(){
+  const max = deck.length * 0.5;
+  const sur20 = Math.max(0, pts / max * 20);
+  el.endScore.innerHTML = `${fmt(pts)}<small> / ${fmt(max)} pts</small>`;
+  el.stGood.textContent = nGood; el.stBad.textContent = nBad; el.stSkip.textContent = nSkip;
+
+  const rate = nGood / deck.length;
+  let line;
+  if(rate >= 0.85)      line = `Équivalent <b>${fmt(sur20)}/20</b>. C'est du solide, presque acquis.`;
+  else if(rate >= 0.65) line = `Équivalent <b>${fmt(sur20)}/20</b>. Encore une ou deux passes sur les ratées et c'est bon.`;
+  else if(rate >= 0.4)  line = `Équivalent <b>${fmt(sur20)}/20</b>. Reprends les ratées maintenant, tant qu'elles sont fraîches.`;
+  else                  line = `Équivalent <b>${fmt(sur20)}/20</b>. Première passe : relis les justifications, la suivante sera meilleure.`;
+  el.endVerdict.innerHTML = line;
+
+  const badges = [];
+  if(nBad===0 && nSkip===0 && deck.length>0) badges.push("🏆 Sans-faute");
+  if(maxStreak>=5) badges.push("🔥 Combo x"+maxStreak);
+  if(mode==="missed" && nGood===deck.length && deck.length>0) badges.push("🔁 Revanche réussie");
+  if(rate>=0.85) badges.push("🎓 Niveau examen");
+  const bossHit = log.filter(l=>l.q.top && l.ok).length;
+  if(bossHit>0) badges.push("⚡ " + bossHit + " bonus réussis");
+  el.badges.innerHTML = badges.map(b=>`<span class="badge">${b}</span>`).join("");
+
+  if(rate >= 0.65) launchConfetti(rate>=0.85 ? 140 : 70);
+  if(xpGained>0) showToast(`+${xpGained} XP cette série`);
+
+  const bad = log.filter(l=>!l.ok);
+  el.reviewWrap.hidden = bad.length === 0;
+  el.reviewList.innerHTML = "";
+  bad.forEach(l=>{
+    const li = document.createElement("li");
+    li.className = "rev" + (l.skipped ? " skipped" : "");
+    li.innerHTML =
+      `<p class="rq">${l.q.q}</p>
+       <p class="ra">→ ${l.q.o[l.q.c]}</p>
+       <p class="rw">${l.q.w}</p>`;
+    el.reviewList.appendChild(li);
+    // Render math in review
+    runKaTeX(li);
+  });
+
+  if(store.best === null || pts > store.best){ store.best = pts; save(); }
+  el.againMissed.hidden = store.missed.length === 0;
+  el.againMissed.textContent = `Refaire seulement les ratées (${store.missed.length})`;
+  const lvl = lvlOf(store.xp);
+  el.memoNote.innerHTML = store.missed.length
+    ? `Tes ${store.missed.length} questions ratées sont gardées. Niveau actuel : <b>${lvl} · ${titleOf(lvl).name}</b>.`
+    : `Toutes celles que tu as vues sont justes. Niveau actuel : <b>${lvl} · ${titleOf(lvl).name}</b>.`;
+
+  show("end");
+}
+
+/* ---------- clavier ---------- */
+document.addEventListener("keydown", e=>{
+  if(!el.quiz.hidden){
+    if(!answered){
+      const n = parseInt(e.key, 10);
+      if(n >= 1 && n <= deck[idx].o.length){ e.preventDefault(); answer(n-1, el.qOpts.children[n-1]?.firstChild); }
+      else if(e.key.toLowerCase() === "p"){ e.preventDefault(); skip(); }
+    } else if(e.key === "Enter" || e.key === " "){ e.preventDefault(); next(); }
+  }
+});
+
+buildStart();
+</script>
+
+</body>
+</html>
